@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>ClinicFlow | Clinic Management</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="brand">
+        <div class="brand-icon">+</div>
+
+        <div>
+          <h2>ClinicFlow</h2>
+          <span>Management System</span>
+        </div>
+      </div>
+
+      <nav class="navigation">
+
+        <button class="nav-btn active" data-section="dashboard">
+          Dashboard
+        </button>
+
+        <button class="nav-btn" data-section="doctors">
+          Doctors
+        </button>
+
+        <button class="nav-btn" data-section="patients">
+          Patients
+        </button>
+
+        <button class="nav-btn" data-section="appointments">
+          Appointments
+        </button>
+
+      </nav>
+
+      <div class="system-status">
+        <span class="online-dot"></span>
+
+        <div>
+          <strong>System Online</strong>
+          <small>Connected to API</small>
+        </div>
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <header class="topbar">
+
+        <div>
+          <p class="eyebrow">CLINIC MANAGEMENT</p>
+          <h1 id="pageTitle">Dashboard</h1>
+        </div>
+
+        <div class="api-status">
+          <span></span>
+          API Connected
+        </div>
+
+      </header>
+
+
+      <!-- DASHBOARD -->
+      <section id="dashboard" class="section active">
+
+        <div class="hero">
+
+          <div>
+            <p class="hero-label">WELCOME TO CLINICFLOW</p>
+
+            <h2>
+              Manage your clinic
+              <br>
+              from one place.
+            </h2>
+
+            <p>
+              Doctors, patients and appointments —
+              all connected to your Node.js API.
+            </p>
+          </div>
+
+          <div class="hero-symbol">✚</div>
+
+        </div>
+
+
+        <!-- STAT CARDS -->
+
+        <div class="stats">
+
+          <div class="stat-card">
+            <span>Doctors</span>
+            <strong id="doctorCount">0</strong>
+            <small>Registered doctors</small>
+          </div>
+
+          <div class="stat-card">
+            <span>Patients</span>
+            <strong id="patientCount">0</strong>
+            <small>Registered patients</small>
+          </div>
+
+          <div class="stat-card">
+            <span>Appointments</span>
+            <strong id="appointmentCount">0</strong>
+            <small>Total appointments</small>
+          </div>
+
+          <div class="stat-card highlight">
+            <span>Scheduled</span>
+            <strong id="scheduledCount">0</strong>
+            <small>Active appointments</small>
+          </div>
+
+        </div>
+
+
+        <div class="dashboard-grid">
+
+          <div class="panel">
+
+            <p class="eyebrow">QUICK ACTIONS</p>
+            <h3>Manage your clinic</h3>
+
+            <div class="quick-actions">
+
+              <button class="quick-card" data-go="doctors">
+                <span>01</span>
+                <strong>Doctors</strong>
+                <small>
+                  Manage doctors and search by name or specialization.
+                </small>
+              </button>
+
+              <button class="quick-card" data-go="patients">
+                <span>02</span>
+                <strong>Patients</strong>
+                <small>
+                  Manage patients and filter your records.
+                </small>
+              </button>
+
+              <button class="quick-card" data-go="appointments">
+                <span>03</span>
+                <strong>Appointments</strong>
+                <small>
+                  Book and manage clinic appointments.
+                </small>
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="panel">
+
+            <p class="eyebrow">TECH STACK</p>
+            <h3>Built with</h3>
+
+            <div class="tech-list">
+
+              <div>
+                <strong>Node.js</strong>
+                <span>Runtime</span>
+              </div>
+
+              <div>
+                <strong>Express</strong>
+                <span>REST API</span>
+              </div>
+
+              <div>
+                <strong>MongoDB</strong>
+                <span>Database</span>
+              </div>
+
+              <div>
+                <strong>Zod</strong>
+                <span>Validation</span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- DOCTORS -->
+
+      <section id="doctors" class="section">
+
+        <div class="section-header">
+
+          <div>
+            <p class="eyebrow">DIRECTORY</p>
+            <h2>Doctors</h2>
+          </div>
+
+          <button class="primary-btn" id="addDoctorBtn">
+            + Add Doctor
+          </button>
+
+        </div>
+
+
+        <div class="toolbar">
+
+          <input
+            id="doctorSearch"
+            type="search"
+            placeholder="Search doctor name..."
+          />
+
+          <input
+            id="doctorSpecialization"
+            type="text"
+            placeholder="Specialization..."
+          />
+
+          <button class="secondary-btn" id="doctorSearchBtn">
+            Search
+          </button>
+
+          <button class="ghost-btn" id="doctorResetBtn">
+            Reset
+          </button>
+
+        </div>
+
+
+        <div id="doctorMessage" class="message"></div>
+
+        <div id="doctorsGrid" class="cards-grid"></div>
+
+      </section>
+
+
+
+      <!-- PATIENTS -->
+
+      <section id="patients" class="section">
+
+        <div class="section-header">
+
+          <div>
+            <p class="eyebrow">PATIENT RECORDS</p>
+            <h2>Patients</h2>
+          </div>
+
+          <button class="primary-btn" id="addPatientBtn">
+            + Add Patient
+          </button>
+
+        </div>
+
+
+        <div class="toolbar">
+
+          <input
+            id="patientSearch"
+            type="search"
+            placeholder="Search patient name..."
+          />
+
+          <select id="patientGender">
+
+            <option value="">
+              All genders
+            </option>
+
+            <option value="Female">
+              Female
+            </option>
+
+            <option value="Male">
+              Male
+            </option>
+
+          </select>
+
+
+          <input
+            id="patientAge"
+            type="number"
+            min="0"
+            placeholder="Minimum age"
+          />
+
+
+          <button class="secondary-btn" id="patientSearchBtn">
+            Search
+          </button>
+
+          <button class="ghost-btn" id="patientResetBtn">
+            Reset
+          </button>
+
+        </div>
+
+
+        <div id="patientMessage" class="message"></div>
+
+        <div id="patientsGrid" class="cards-grid"></div>
+
+      </section>
+
+
+
+      <!-- APPOINTMENTS -->
+
+      <section id="appointments" class="section">
+
+        <div class="section-header">
+
+          <div>
+            <p class="eyebrow">SCHEDULE</p>
+            <h2>Appointments</h2>
+          </div>
+
+          <button class="primary-btn" id="addAppointmentBtn">
+            + New Appointment
+          </button>
+
+        </div>
+
+
+        <div class="toolbar">
+
+          <select id="appointmentStatus">
+
+            <option value="">
+              All statuses
+            </option>
+
+            <option value="Scheduled">
+              Scheduled
+            </option>
+
+            <option value="Completed">
+              Completed
+            </option>
+
+            <option value="Cancelled">
+              Cancelled
+            </option>
+
+          </select>
+
+          <button class="secondary-btn" id="appointmentFilterBtn">
+            Filter
+          </button>
+
+          <button class="ghost-btn" id="appointmentResetBtn">
+            Reset
+          </button>
+
+        </div>
+
+
+        <div id="appointmentMessage" class="message"></div>
+
+        <div
+          id="appointmentsTable"
+          class="table-container"
+        ></div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+
+  <!-- MODAL -->
+
+  <div id="modalBackdrop" class="modal-backdrop">
+
+    <div class="modal">
+
+      <div class="modal-header">
+
+        <div>
+          <p class="eyebrow" id="modalEyebrow">
+            FORM
+          </p>
+
+          <h3 id="modalTitle">
+            Add
+          </h3>
+        </div>
+
+        <button id="closeModal" class="close-btn">
+          ×
+        </button>
+
+      </div>
+
+
+      <form id="entityForm"></form>
+
+    </div>
+
+  </div>
+
+
+  <div id="toast" class="toast"></div>
+
+
+  <script src="app.js"></script>
+
+</body>
+</html>
